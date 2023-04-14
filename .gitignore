@@ -43,6 +43,7 @@
 .idea/jsLibraryMappings.xml
 
 # Sensitive or high-churn files:
+.idea
 .idea/
 .idea/dataSources.ids
 .idea/dataSources.xml
