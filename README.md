@@ -12,7 +12,7 @@
       Aktualnie się wyświetla, ale jeszcze trzeba dodać funkcjonalność 
       aby po podniesieniu go Pacman mógł pokonać ducha
       
-## - Wprowadzenie kolorów
+## - Wprowadzenie kolorów (?zrobione?)
       - żółty Pacman
       - różnokolorowe duchy
       - niebieskie granice mapy
