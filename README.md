@@ -9,7 +9,8 @@
 ## - Wygenerowanie kilku różnych map, z których będziemy wybierać
 
 ## - Działanie power pelletu
-      Aktualnie się wyświetla, ale jeszcze trzeba dodać funkcjonalność aby po podniesieniu go Pacman mógł pokonać ducha
+      Aktualnie się wyświetla, ale jeszcze trzeba dodać funkcjonalność 
+      aby po podniesieniu go Pacman mógł pokonać ducha
       
 ## - Wprowadzenie kolorów
       - żółty Pacman
