@@ -1,0 +1,3 @@
+C:/Users/jmyjk/SynologyDriveJacekMyjkowski/SynologyDrive/#STUDIA/SO2/SO2_pacman/cmake-build-debug/CMakeFiles/pacmanMultiThread.dir
+C:/Users/jmyjk/SynologyDriveJacekMyjkowski/SynologyDrive/#STUDIA/SO2/SO2_pacman/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/jmyjk/SynologyDriveJacekMyjkowski/SynologyDrive/#STUDIA/SO2/SO2_pacman/cmake-build-debug/CMakeFiles/rebuild_cache.dir

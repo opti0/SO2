@@ -1,0 +1,23 @@
+# ninja log v5
+13	798	7031040110707088	CMakeFiles/pacmanMultiThread.dir/semafor.cpp.obj	46501bc0985afee7
+901	1061	7031045801900167	pacmanMultiThread.exe	1e1c2d1dfa4dc13d
+3	900	7031045800320231	CMakeFiles/pacmanMultiThread.dir/main.cpp.obj	98ad15d3d8af8016
+1	179	7031049638692025	build.ninja	85027847776f3815
+3	1037	7031051144998521	CMakeFiles/pacmanMultiThread.dir/main.cpp.obj	98ad15d3d8af8016
+1038	1219	7031051146749020	pacmanMultiThread.exe	1e1c2d1dfa4dc13d
+6	908	7031051428434018	CMakeFiles/pacmanMultiThread.dir/main.cpp.obj	98ad15d3d8af8016
+909	1071	7031051430013280	pacmanMultiThread.exe	1e1c2d1dfa4dc13d
+5	1109	7031051781025686	CMakeFiles/pacmanMultiThread.dir/main.cpp.obj	98ad15d3d8af8016
+1111	1278	7031051782675451	pacmanMultiThread.exe	1e1c2d1dfa4dc13d
+4	927	7031051985293644	CMakeFiles/pacmanMultiThread.dir/main.cpp.obj	98ad15d3d8af8016
+928	1101	7031051986994009	pacmanMultiThread.exe	1e1c2d1dfa4dc13d
+4	1100	7031063015146717	CMakeFiles/pacmanMultiThread.dir/main.cpp.obj	98ad15d3d8af8016
+1101	1289	7031063016996695	pacmanMultiThread.exe	1e1c2d1dfa4dc13d
+6	1080	7031064121735062	CMakeFiles/pacmanMultiThread.dir/main.cpp.obj	98ad15d3d8af8016
+1080	1254	7031064123435033	pacmanMultiThread.exe	1e1c2d1dfa4dc13d
+5	1293	7031066012929356	CMakeFiles/pacmanMultiThread.dir/main.cpp.obj	98ad15d3d8af8016
+1294	1472	7031066014679426	pacmanMultiThread.exe	1e1c2d1dfa4dc13d
+4	1015	7031066104160621	CMakeFiles/pacmanMultiThread.dir/main.cpp.obj	98ad15d3d8af8016
+1016	1187	7031066105850367	pacmanMultiThread.exe	1e1c2d1dfa4dc13d
+7	1418	7031600374438020	CMakeFiles/pacmanMultiThread.dir/main.cpp.obj	98ad15d3d8af8016
+1419	1782	7031600378076382	pacmanMultiThread.exe	1e1c2d1dfa4dc13d
