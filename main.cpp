@@ -42,8 +42,33 @@ void clear_screen() {
 
 void print_board() {
     clear_screen();
-    for (int i = 0; i < BOARD_HEIGHT; i++) {
-        cout << board[i] << endl;
+    char pixel;
+    for (int h = 0; h < BOARD_HEIGHT; h++) {
+        for(int w=0;w<BOARD_WIDTH;w++){
+            pixel=board[h][w];
+            switch (pixel) {
+                case 'P':
+                    //Printing Pacman symbol in yellow color
+                    printf("\x1b[33;40m%c\x1b[0m", pixel);
+                    break;
+                case '#':
+                    //Printing board borders in blue color
+                    printf("\x1b[94;104m%c\x1b[0m", pixel);
+                    break;
+                case 'O':
+                    //Printing pellet in green color
+                    printf("\x1b[32;40m%c\x1b[0m", pixel);
+                    break;
+                case 'G':
+                    //Printing ghost in red color
+                    printf("\x1b[91;40m%c\x1b[0m", pixel);
+                    break;
+                default:
+                    cout<<pixel;
+            }
+
+        }
+        cout<<endl;
     }
     cout << "Score: " << score << endl;
     testInt++;
