@@ -18,3 +18,5 @@
       - niebieskie granice mapy
       - czerwony pellet
       
+## - Możlwiość ukończenia gry
+      Obecnie po zjedzeniu wszystkich punktów gra się nie kończy
