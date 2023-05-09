@@ -196,7 +196,7 @@ int main() {
   // Generate a random integer between 0 and 2
     int random_num = (rand() % 2);
     switch (random_num){
-    case 1:
+    case 0:
 
         for (int y = 0; y < BOARD_HEIGHT; y++) {
             for (int x = 0; x < BOARD_WIDTH; x++) {
@@ -224,7 +224,7 @@ int main() {
             update_board(ghost.x, ghost.y, 'G');
         break;
 
-    case 2:
+    case 1:
 
             board[0] = "###################";
             board[1] = "#..............O..#";
