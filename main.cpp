@@ -20,7 +20,7 @@ const int SCORE_GHOST = 100;
 const int SCORE_PELLET = 50;
 const int PELLET_DURATION = 10;
 using namespace std;
-int testInt=0;
+int testInt=-1;
 
 struct Ghost {
     int x, y;
@@ -74,7 +74,7 @@ void print_board() {
     }
     cout << "Score: " << score << endl;
     testInt++;
-    cout<<testInt<<endl;
+    cout<<"Moves: "<<testInt<<endl;
 }
 
 void update_board(int x, int y, char c) {
@@ -113,7 +113,10 @@ void move_pacman(int dx, int dy) {
         return;
     }
     char c = board[new_y][new_x];
-    if (c == ' ') {
+    if (c == '#'){
+       update_board(pacman_x, pacman_y, 'P');
+    }
+    else if (c == ' ') {
         pacman_x = new_x;
         pacman_y = new_y;
         update_board(pacman_x, pacman_y, 'P');
