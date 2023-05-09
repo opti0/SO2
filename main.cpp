@@ -1,4 +1,6 @@
 #include <iostream>
+#include <ctime>
+#include <cstdlib>
 #include <thread>
 #include <mutex>
 #include <chrono>
@@ -188,34 +190,97 @@ void game_loop() {
     print_board();
 }
 int main() {
+
     // initialize game board and score
-    for (int y = 0; y < BOARD_HEIGHT; y++) {
-        for (int x = 0; x < BOARD_WIDTH; x++) {
-            if (y == 0 || y == BOARD_HEIGHT - 1 || x == 0 || x == BOARD_WIDTH - 1) {
-                board[y][x] = '#';
-            } else {
-                board[y][x] = '.';
-                score++;
+     srand(time(NULL));
+  // Generate a random integer between 0 and 2
+    int random_num = (rand() % 2);
+    switch (random_num){
+    case 1:
+
+        for (int y = 0; y < BOARD_HEIGHT; y++) {
+            for (int x = 0; x < BOARD_WIDTH; x++) {
+                if (y == 0 || y == BOARD_HEIGHT - 1 || x == 0 || x == BOARD_WIDTH - 1) {
+                    board[y][x] = '#';
+            }
+                else {
+                    board[y][x] = '.';
+                //score++;
             }
         }
+
     }
-    //adding pellet
-    place_pellet();
+        //adding pellet
+        place_pellet();
+        ghosts[0].x = BOARD_WIDTH / 2 - 1;
+        ghosts[0].y = BOARD_HEIGHT / 2 - 1;
+        ghosts[1].x = BOARD_WIDTH / 2 + 1;
+        ghosts[1].y = BOARD_HEIGHT / 2 - 1;
+        ghosts[2].x = BOARD_WIDTH / 2 - 1;
+        ghosts[2].y = BOARD_HEIGHT / 2 + 1;
+        ghosts[3].x = BOARD_WIDTH / 2 + 1;
+        ghosts[3].y = BOARD_HEIGHT / 2 + 1;
+        for (auto & ghost : ghosts)
+            update_board(ghost.x, ghost.y, 'G');
+        break;
+
+    case 2:
+
+            board[0] = "###################";
+            board[1] = "#..............O..#";
+            board[2] = "#.###.###.###.###.#";
+            board[3] = "#.###.###.###.###.#";
+            board[4] = "#.###.###.###.###.#";
+            board[5] = "#.................#";
+            board[6] = "#.###.###.#.###.###";
+            board[7] = "#.###.###.#.###.###";
+            board[8] = "#.......#.#.......#";
+            board[9] = "#####.#.#...#.#####";
+            board[10]= "#..O..#.#..#.....##";
+            board[11]= "#####.#.#...#.#####";
+            board[12]= "#.......#.#......##";
+            board[13]= "#.###.###.###.#####";
+            board[14]= "#.###.###.###.#####";
+            board[15]= "#.........#.....O.#";
+            board[16]= "#.###.###.#####.###";
+            board[17]= "#.###.###.#####.###";
+            board[18]= "#.............O...#";
+            board[19]= "###################";
+            break;
+    default:
+        for (int y = 0; y < BOARD_HEIGHT; y++) {
+            for (int x = 0; x < BOARD_WIDTH; x++) {
+                if (y == 0 || y == BOARD_HEIGHT - 1 || x == 0 || x == BOARD_WIDTH - 1) {
+                    board[y][x] = '#';
+            }
+                else {
+                    board[y][x] = '.';
+                //score++;
+            }
+        }
+
+    }
+        //adding pellet
+        place_pellet();
+        ghosts[0].x = BOARD_WIDTH / 2 - 1;
+        ghosts[0].y = BOARD_HEIGHT / 2 - 1;
+        ghosts[1].x = BOARD_WIDTH / 2 + 1;
+        ghosts[1].y = BOARD_HEIGHT / 2 - 1;
+        ghosts[2].x = BOARD_WIDTH / 2 - 1;
+        ghosts[2].y = BOARD_HEIGHT / 2 + 1;
+        ghosts[3].x = BOARD_WIDTH / 2 + 1;
+        ghosts[3].y = BOARD_HEIGHT / 2 + 1;
+        for (auto & ghost : ghosts)
+            update_board(ghost.x, ghost.y, 'G');
+        break;
+    }
+
     // add Pacman and ghosts to board
     pacman_x = BOARD_WIDTH / 2;
     pacman_y = BOARD_HEIGHT / 2;
     update_board(pacman_x, pacman_y, 'P');
-    ghosts[0].x = BOARD_WIDTH / 2 - 1;
-    ghosts[0].y = BOARD_HEIGHT / 2 - 1;
-    ghosts[1].x = BOARD_WIDTH / 2 + 1;
-    ghosts[1].y = BOARD_HEIGHT / 2 - 1;
-    ghosts[2].x = BOARD_WIDTH / 2 - 1;
-    ghosts[2].y = BOARD_HEIGHT / 2 + 1;
-    ghosts[3].x = BOARD_WIDTH / 2 + 1;
-    ghosts[3].y = BOARD_HEIGHT / 2 + 1;
-    for (auto & ghost : ghosts) {
-        update_board(ghost.x, ghost.y, 'G');
-    }
+
+
     // start game loop
     game_loop();
     cout<<"Game over!"<<endl;
