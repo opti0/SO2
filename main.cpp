@@ -42,6 +42,15 @@ void clear_screen() {
     system("cls");
 }
 
+bool still_points (){
+    bool colectable_points = false;
+    for (int i = 0; i<BOARD_WIDTH; i++)
+        for (int j = 0; j<BOARD_WIDTH; j++)
+        if (board [i][j]=='.') colectable_points = true;
+    return colectable_points;
+
+}
+
 void print_board() {
     clear_screen();
     char pixel;
@@ -168,12 +177,12 @@ void move_ghost(int ghost_id) {
             game_over = true;
         }
     }
-    std::this_thread::sleep_for(std::chrono::milliseconds(500));
+    //std::this_thread::sleep_for(std::chrono::milliseconds(500));
     }
 }
 
 void game_loop() {
-    while (!game_over) {
+    while (!game_over && still_points()) {
         print_board();
         int c = _getch(); // for Windows
         if (c == 224) { // arrow key
@@ -188,9 +197,15 @@ void game_loop() {
                 move_pacman(PACMAN_SPEED, 0);
             }
         }
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        //std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
-    print_board();
+    if (game_over)
+        cout<<"Game over!"<<endl;
+    if (!still_points()){
+      clear_screen();
+      cout<<"Game over - YOU WON!"<<endl;
+    }
+
 }
 int main() {
 
@@ -286,7 +301,7 @@ int main() {
 
     // start game loop
     game_loop();
-    cout<<"Game over!"<<endl;
+
     getch();
     return 0;
 }

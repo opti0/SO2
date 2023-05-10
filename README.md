@@ -6,7 +6,6 @@
 ## - Poruszanie się duchów
       Trzeba dodać je aby działały na osobnym wątku wykorzystując nasz **semafor.cpp**
 
-## - Wygenerowanie kilku różnych map, z których będziemy wybierać
 
 ## - Działanie power pelletu
       Aktualnie się wyświetla, ale jeszcze trzeba dodać funkcjonalność 
@@ -18,5 +17,3 @@
       - niebieskie granice mapy
       - czerwony pellet
       
-## - Możlwiość ukończenia gry
-      Obecnie po zjedzeniu wszystkich punktów gra się nie kończy
