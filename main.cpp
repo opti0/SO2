@@ -177,8 +177,9 @@ void move_ghosts() {
             int new_x = std::max(0, std::min(BOARD_WIDTH - 1, ghost.x + dx));
             int new_y = std::max(0, std::min(BOARD_HEIGHT - 1, ghost.y + dy));
             if (board[new_y][new_x] != '#') {
+                if(board[new_y][new_x]=='.') update_board(ghost.x, ghost.y, '.');
+                else update_board(ghost.x, ghost.y, ' ');
                 update_board(new_x, new_y, 'G');
-                update_board(ghost.x, ghost.y, ' ');
                 ghost.x = new_x;
                 ghost.y = new_y;
                 if (new_x == pacman_x && new_y == pacman_y) {
