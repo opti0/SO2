@@ -107,6 +107,27 @@ void place_pellet(){
     board[4][17]='O';
 }
 
+void place_ghosts(){
+    random_device rd;
+    mt19937 gen(rd());
+    uniform_int_distribution<int> dis(1, 18);
+    for(auto & ghost : ghosts){
+        int x,y;
+        while (true){
+            x = dis(gen);
+            y = dis(gen);
+            if(board[x][y]=='#') continue;
+            if(board[x][y]=='G') continue;
+            if(board[x][y]=='P') continue;
+            if(board[x][y]=='O') continue;
+            ghost.x=x;
+            ghost.y=y;
+            break;
+        }
+        update_board(ghost.x, ghost.y, 'G');
+    }
+}
+
 void remove_pellet(int x, int y) {
     update_board(x, y, ' ');
     score += SCORE_PELLET;
@@ -241,21 +262,22 @@ int main() {
     //choosing board
     switch (random_num){
     case 0:
-
         for (int y = 0; y < BOARD_HEIGHT; y++) {
             for (int x = 0; x < BOARD_WIDTH; x++) {
                 if (y == 0 || y == BOARD_HEIGHT - 1 || x == 0 || x == BOARD_WIDTH - 1) {
                     board[y][x] = '#';
-            }
+                }
                 else {
                     board[y][x] = '.';
                 //score++;
+                }
             }
         }
-
-    }
         //adding pellet
         place_pellet();
+        //randomly placing ghosts
+        place_ghosts();
+        /*
         ghosts[0].x = BOARD_WIDTH / 2 - 1;
         ghosts[0].y = BOARD_HEIGHT / 2 - 1;
         ghosts[1].x = BOARD_WIDTH / 2 + 1;
@@ -266,6 +288,7 @@ int main() {
         ghosts[3].y = BOARD_HEIGHT / 2 + 1;
         for (auto & ghost : ghosts)
             update_board(ghost.x, ghost.y, 'G');
+            */
         break;
 
     case 1:
@@ -289,22 +312,27 @@ int main() {
             board[17]= "#.###.###.#####.###";
             board[18]= "#.............O...#";
             board[19]= "###################";
+            //randomly placing ghosts
+            place_ghosts();
             break;
+
     default:
         for (int y = 0; y < BOARD_HEIGHT; y++) {
             for (int x = 0; x < BOARD_WIDTH; x++) {
                 if (y == 0 || y == BOARD_HEIGHT - 1 || x == 0 || x == BOARD_WIDTH - 1) {
                     board[y][x] = '#';
-            }
+                }
                 else {
                     board[y][x] = '.';
                 //score++;
+                }
             }
         }
-
-    }
         //adding pellet
         place_pellet();
+        //randomly placing ghosts
+        place_ghosts();
+        /*
         ghosts[0].x = BOARD_WIDTH / 2 - 1;
         ghosts[0].y = BOARD_HEIGHT / 2 - 1;
         ghosts[1].x = BOARD_WIDTH / 2 + 1;
@@ -315,6 +343,7 @@ int main() {
         ghosts[3].y = BOARD_HEIGHT / 2 + 1;
         for (auto & ghost : ghosts)
             update_board(ghost.x, ghost.y, 'G');
+        */
         break;
     }
 
