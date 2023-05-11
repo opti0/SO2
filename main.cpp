@@ -87,7 +87,6 @@ void print_board() {
         cout<<endl;
     }
     cout << "Score: " << score << endl;
-    testInt++;
     cout<<"Moves: "<<testInt<<endl;
 }
 
@@ -119,6 +118,7 @@ void remove_ghost(int x, int y) {
 }
 
 void move_pacman(int dx, int dy) {
+    testInt++;
     int new_x = pacman_x + dx;
     int new_y = pacman_y + dy;
     update_board(pacman_x, pacman_y, ' ');
@@ -183,10 +183,11 @@ void move_ghosts() {
                 ghost.y = new_y;
                 if (new_x == pacman_x && new_y == pacman_y) {
                     game_over = true;
+                    board[new_y][new_x]='X';
                 }
             }
         }
-        //print_board();
+        print_board();
         semafor.zwolnij();
         Sleep(500);
         //std::this_thread::sleep_for(std::chrono::milliseconds(500));
@@ -211,6 +212,7 @@ void game_loop() {
                 move_pacman(PACMAN_SPEED, 0);
             }
         }
+        print_board();
         semafor.zwolnij();
         //std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
@@ -319,18 +321,18 @@ int main() {
     pacman_x = BOARD_WIDTH / 2;
     pacman_y = BOARD_HEIGHT / 2;
     update_board(pacman_x, pacman_y, 'P');
-
+    print_board();
     semafor.zwolnij();
     // start game loop
     std::thread pacman_thread(game_loop);
 
     std::thread ghost_thread(move_ghosts);
 
-    std::thread board_thread(board_reloader);
+    //std::thread board_thread(board_reloader);
 
     pacman_thread.join();
     ghost_thread.join();
-    board_thread.join();
+    //board_thread.join();
 
     getch();
     return 0;
