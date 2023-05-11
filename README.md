@@ -9,7 +9,9 @@
         Pacman powinien zmieniać swój kolor na czas działania power pelletu
       
 ## - Duchy:
-        Problem pojawia się na bardziej skomplikowanej mapie, gdzie duchy nie wykrywają ściany i mogą w niej chodzić
+        Na skomplikowanej mapie duchy czasami stoją w miejscu, bo wybierają kierunek ściany.
+            Możnaby dodać sprawdzenie tego przy wylosowaniu kierunku 
+            i ewentualnie powtórzenie losowania
 		Duchy czasem znikają z planszy (widoczne zwłaszcza na "pustej mapie")
 	
 
