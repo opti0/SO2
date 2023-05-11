@@ -7,8 +7,12 @@
 #include <vector>
 #include <random>
 #include <string>
+#include <thread>
 #include <algorithm>
+#include <windows.h>
 #include <conio.h> // for Windows
+#include <future>
+#include "semafor.cpp"
 const int BOARD_WIDTH = 20;
 const int BOARD_HEIGHT = 20;
 const int NUM_GHOSTS = 4;
@@ -34,6 +38,7 @@ auto end_power_pellet_mode = []() {
 };
 vector<string> board(BOARD_HEIGHT, string(BOARD_WIDTH, ' '));
 mutex board_mutex;
+Semafor semafor(false);
 int pacman_x, pacman_y;
 int score;
 bool game_over;
@@ -144,47 +149,56 @@ void move_pacman(int dx, int dy) {
         update_board(pacman_x, pacman_y, 'P');
     } else if (c == 'G') {
         update_board(pacman_x, pacman_y, 'X');
-        print_board();
+        //print_board();
         game_over = true;
     }
 
 }
 
-void move_ghost(int ghost_id) {
+void move_ghosts() {
+    Sleep(5000);
     random_device rd;
     mt19937 gen(rd());
     uniform_int_distribution<int> dis(0, 3);
     while (!game_over) {
-    int dx = 0, dy = 0;
-    int r = dis(gen);
-    if (r == 0) {
-        dx = GHOST_SPEED;
-    } else if (r == 1) {
-        dx = -GHOST_SPEED;
-    } else if (r == 2) {
-        dy = GHOST_SPEED;
-    } else if (r == 3) {
-        dy = -GHOST_SPEED;
-    }
-    int new_x = std::max(0, std::min(BOARD_WIDTH - 1, pacman_x + dx));
-    int new_y = std::max(0, std::min(BOARD_HEIGHT - 1, pacman_y + dy));
-    if (board[new_y][new_x] != '#') {
-        update_board(new_x, new_y, 'G');
-        update_board(ghosts[ghost_id].x, ghosts[ghost_id].y, ' ');
-        ghosts[ghost_id].x = new_x;
-        ghosts[ghost_id].y = new_y;
-        if (new_x == pacman_x && new_y == pacman_y) {
-            game_over = true;
+        semafor.pozyskaj();
+        for(auto & ghost : ghosts) {
+            int dx = 0, dy = 0;
+            int r = dis(gen);
+            if (r == 0) {
+                dx = GHOST_SPEED;
+            } else if (r == 1) {
+                dx = -GHOST_SPEED;
+            } else if (r == 2) {
+                dy = GHOST_SPEED;
+            } else if (r == 3) {
+                dy = -GHOST_SPEED;
+            }
+            int new_x = std::max(0, std::min(BOARD_WIDTH - 1, ghost.x + dx));
+            int new_y = std::max(0, std::min(BOARD_HEIGHT - 1, ghost.y + dy));
+            if (board[new_y][new_x] != '#') {
+                update_board(new_x, new_y, 'G');
+                update_board(ghost.x, ghost.y, ' ');
+                ghost.x = new_x;
+                ghost.y = new_y;
+                if (new_x == pacman_x && new_y == pacman_y) {
+                    game_over = true;
+                }
+            }
         }
-    }
-    //std::this_thread::sleep_for(std::chrono::milliseconds(500));
+        //print_board();
+        semafor.zwolnij();
+        Sleep(500);
+        //std::this_thread::sleep_for(std::chrono::milliseconds(500));
     }
 }
 
 void game_loop() {
     while (!game_over && still_points()) {
-        print_board();
+
+        //print_board();
         int c = _getch(); // for Windows
+        semafor.pozyskaj();
         if (c == 224) { // arrow key
             c = _getch(); // for Windows
             if (c == 72) { // up
@@ -197,6 +211,7 @@ void game_loop() {
                 move_pacman(PACMAN_SPEED, 0);
             }
         }
+        semafor.zwolnij();
         //std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
     if (game_over)
@@ -207,12 +222,20 @@ void game_loop() {
     }
 
 }
+
+void board_reloader(){
+    while(!game_over) {
+        print_board();
+    }
+}
+
 int main() {
 
     // initialize game board and score
      srand(time(NULL));
   // Generate a random integer between 0 and 2
     int random_num = (rand() % 2);
+    //choosing board
     switch (random_num){
     case 0:
 
@@ -243,7 +266,6 @@ int main() {
         break;
 
     case 1:
-
             board[0] = "###################";
             board[1] = "#..............O..#";
             board[2] = "#.###.###.###.###.#";
@@ -298,9 +320,17 @@ int main() {
     pacman_y = BOARD_HEIGHT / 2;
     update_board(pacman_x, pacman_y, 'P');
 
-
+    semafor.zwolnij();
     // start game loop
-    game_loop();
+    std::thread pacman_thread(game_loop);
+
+    std::thread ghost_thread(move_ghosts);
+
+    std::thread board_thread(board_reloader);
+
+    pacman_thread.join();
+    ghost_thread.join();
+    board_thread.join();
 
     getch();
     return 0;

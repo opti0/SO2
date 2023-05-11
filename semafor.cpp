@@ -109,8 +109,8 @@ void konsument()
         sem.zwolnij();
     }
 }
-
-int main() 
+/*
+int main()
 {
     {
         cout << "Test bez zabezpieczenia, sumowanie " << k << " x " << n << " = " << k * n << endl;
@@ -160,3 +160,4 @@ int main()
     }
     return 0;
 }
+ */
