@@ -32,16 +32,14 @@ struct Ghost {
 };
 
 Ghost ghosts[NUM_GHOSTS];
-auto end_power_pellet_mode = []() {
-    this_thread::sleep_for(chrono::seconds(PELLET_DURATION));
-    // end power pellet mode
-};
 vector<string> board(BOARD_HEIGHT, string(BOARD_WIDTH, ' '));
 mutex board_mutex;
 Semafor semafor(false);
 int pacman_x, pacman_y;
 int score;
 bool game_over;
+bool pellet;
+auto pellet_time = chrono::system_clock::now();;
 
 void clear_screen() {
     system("cls");
@@ -64,6 +62,9 @@ void print_board() {
             pixel=board[h][w];
             switch (pixel) {
                 case 'P':
+                    if(pellet)
+                        printf("\x1b[32;40m%c\x1b[0m", pixel);
+                    else
                     //Printing Pacman symbol in yellow color
                     printf("\x1b[33;40m%c\x1b[0m", pixel);
                     break;
@@ -131,10 +132,12 @@ void place_ghosts(){
 void remove_pellet(int x, int y) {
     update_board(x, y, ' ');
     score += SCORE_PELLET;
+    pellet = true;
+    pellet_time = chrono::system_clock::now();
 }
 
-void remove_ghost(int x, int y) {
-    update_board(x, y, ' ');
+void remove_ghost(/*int x, int y*/) {
+    //update_board(x, y, ' ');
     score += SCORE_GHOST;
 }
 
@@ -164,13 +167,13 @@ void move_pacman(int dx, int dy) {
         remove_pellet(new_x, new_y);
         pacman_x = new_x;
         pacman_y = new_y;
-        // start power pellet mode
-        //std::thread power_pellet_thread(end_power_pellet_mode);
-        //power_pellet_thread.detach();
-        //update_board(pacman_x, pacman_y, 'P');
-    } else if (c == 'G') {
-        update_board(pacman_x, pacman_y, 'X');
+    } else if (c == 'G' && pellet) {
+        update_board(pacman_x, pacman_y, 'P');
+        remove_ghost();
+        }
         //print_board();
+        else if (c == 'G' && !pellet) {
+        update_board(pacman_x, pacman_y, 'X');
         game_over = true;
     }
 
@@ -203,7 +206,11 @@ void move_ghosts() {
                 update_board(new_x, new_y, 'G');
                 ghost.x = new_x;
                 ghost.y = new_y;
-                if (new_x == pacman_x && new_y == pacman_y) {
+                if (new_x == pacman_x && new_y == pacman_y && pellet) {
+                    board[new_y][new_x]='P';
+                    remove_ghost();
+                    }
+                if (new_x == pacman_x && new_y == pacman_y && !pellet) {
                     game_over = true;
                     board[new_y][new_x]='X';
                 }
@@ -217,7 +224,11 @@ void move_ghosts() {
 
 void game_loop() {
     while (!game_over && still_points()) {
-
+        auto curr_time = chrono::system_clock::now();
+        chrono::duration<double> elapsed_seconds = curr_time-pellet_time;
+        elapsed_seconds.count();
+        if (elapsed_seconds>chrono::seconds(PELLET_DURATION))
+            pellet = false;
         //print_board();
         int c = _getch(); // for Windows
         semafor.pozyskaj();
@@ -275,18 +286,6 @@ int main() {
         place_pellet();
         //randomly placing ghosts
         place_ghosts();
-        /*
-        ghosts[0].x = BOARD_WIDTH / 2 - 1;
-        ghosts[0].y = BOARD_HEIGHT / 2 - 1;
-        ghosts[1].x = BOARD_WIDTH / 2 + 1;
-        ghosts[1].y = BOARD_HEIGHT / 2 - 1;
-        ghosts[2].x = BOARD_WIDTH / 2 - 1;
-        ghosts[2].y = BOARD_HEIGHT / 2 + 1;
-        ghosts[3].x = BOARD_WIDTH / 2 + 1;
-        ghosts[3].y = BOARD_HEIGHT / 2 + 1;
-        for (auto & ghost : ghosts)
-            update_board(ghost.x, ghost.y, 'G');
-            */
         break;
 
     case 1:
@@ -330,18 +329,6 @@ int main() {
         place_pellet();
         //randomly placing ghosts
         place_ghosts();
-        /*
-        ghosts[0].x = BOARD_WIDTH / 2 - 1;
-        ghosts[0].y = BOARD_HEIGHT / 2 - 1;
-        ghosts[1].x = BOARD_WIDTH / 2 + 1;
-        ghosts[1].y = BOARD_HEIGHT / 2 - 1;
-        ghosts[2].x = BOARD_WIDTH / 2 - 1;
-        ghosts[2].y = BOARD_HEIGHT / 2 + 1;
-        ghosts[3].x = BOARD_WIDTH / 2 + 1;
-        ghosts[3].y = BOARD_HEIGHT / 2 + 1;
-        for (auto & ghost : ghosts)
-            update_board(ghost.x, ghost.y, 'G');
-        */
         break;
     }
 

@@ -4,11 +4,10 @@
 # TODO:
 
 ## - Działanie power pelletu
-      Aktualnie się wyświetla, ale jeszcze trzeba dodać funkcjonalność 
-      aby po podniesieniu go Pacman mógł pokonać ducha
-      Pacman powinien zmieniać swój kolor na czas działania power pelletu
+	Jest dodana podstawowa funkcjonalność. W momencie zjedzienia pelletu pacman i pellet na chwilę znikają. 
       
 ## - Duchy:
 	Duchy czasem znikają z planszy (widoczne zwłaszcza na "pustej mapie")
+	Po zjedzeniu ducha on sie pojawia w tym samym miejscu w kolejnej iteracji swojego wątku
 	
 
