@@ -165,9 +165,9 @@ void move_pacman(int dx, int dy) {
         pacman_x = new_x;
         pacman_y = new_y;
         // start power pellet mode
-        std::thread power_pellet_thread(end_power_pellet_mode);
-        power_pellet_thread.detach();
-        update_board(pacman_x, pacman_y, 'P');
+        //std::thread power_pellet_thread(end_power_pellet_mode);
+        //power_pellet_thread.detach();
+        //update_board(pacman_x, pacman_y, 'P');
     } else if (c == 'G') {
         update_board(pacman_x, pacman_y, 'X');
         //print_board();
@@ -212,7 +212,6 @@ void move_ghosts() {
         print_board();
         semafor.zwolnij();
         Sleep(500);
-        //std::this_thread::sleep_for(std::chrono::milliseconds(500));
     }
 }
 
@@ -236,7 +235,6 @@ void game_loop() {
         }
         print_board();
         semafor.zwolnij();
-        //std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
     if (game_over)
         cout<<"Game over!"<<endl;
@@ -358,11 +356,8 @@ int main() {
 
     std::thread ghost_thread(move_ghosts);
 
-    //std::thread board_thread(board_reloader);
-
     pacman_thread.join();
     ghost_thread.join();
-    //board_thread.join();
 
     getch();
     return 0;
