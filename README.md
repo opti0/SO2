@@ -63,9 +63,15 @@ Gracz do poruszania się po mapie używa strzałek na klawiaturze. Poruszanie si
 
 ## Wątki w programie:
 ### 1. Pacman
-co reprezentuje ten wątek
+W wątku tym działa funkcja "game_loop()", która odpowiada za poruszanie się Pacmana. Sprawdza on warunek naciśnięcia klawisza i na podstawie tego aktualizuje jego pozycję na mapie.
+
+Wątek ten wywołując funkcję "move_pacman()" sprawdza również, czy pozycja Pacmana nie pokryła się z pozycją ducha. Jeśli się pokryła, to w zależności czy "power pellet model" jest aktywny, duch jest zjadany, albo Pacman przegrywa i gra się kończy"
 ### 2. Duchy
-co reprezentuje ten wątek
+W wątku tym działa funkcja "move_ghosts()", która iteracyjnie porusza każdym z duchów.
+
+Dla każdego z duchów losuje kierunek, w jakim duch się poruszy i jeśli ten kierunek jest dozwolony (tzn. nie ma tam ściany), to pozycja ducha jest aktualizowana na mapie.
+
+Wątek ten również pilnuje pokrycia się pozycji ducha i Pacmana.
 
 ## Sekcje krytyczne:
 (typ, np muteks/semafor)
