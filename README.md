@@ -13,6 +13,17 @@
 ---
 # SO2 - Pacman
 
+### Spis treści
+* [O projekcie](#o-projekcie)
+* [Twórcy](#twórcy)
+* [Funkcjonalność gry](#funkcjonalność-gry)
+* [Dodatkowa funkcjonalność](#dodatkowa-funkcjonalność)
+* [Ekran gry](#ekran-gry)
+* [Wątki w programie](#wątki-w-programie)
+* [Sekcje krytyczne](#sekcje-krytyczne)
+
+---
+
 ## O projekcie
 Założeniem projektu jest stworzenie gry typu Pacman, wyświetlającej się w terminalu i wykorzystującej do działania mechanizm wielowątkowości.
 
