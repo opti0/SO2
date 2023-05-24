@@ -41,10 +41,12 @@ bool game_over;
 bool pellet;
 auto pellet_time = chrono::system_clock::now();;
 
+//This is helper function to clear terminal screen
 void clear_screen() {
     system("cls");
 }
 
+//This function check that does any point available to collect exist on the board
 bool still_points (){
     bool colectable_points = false;
     for (int i = 0; i<BOARD_WIDTH; i++)
@@ -54,6 +56,7 @@ bool still_points (){
 
 }
 
+//This function is responsible for clearing screen and printing updated board
 void print_board() {
     clear_screen();
     char pixel;
@@ -91,21 +94,25 @@ void print_board() {
     cout<<"Moves: "<<testInt<<endl;
 }
 
+//This function is evoked everytime when program need to change selected field on the board
 void update_board(int x, int y, char c) {
     board[y][x] = c;
 }
 
+//This function is evoked every time, when Pacman pick up a dot
 void remove_dot(int x, int y) {
     update_board(x, y, ' ');
     score += SCORE_DOT;
 }
 
+//This function is responsible for placing pellet on the board at the beginning of the game.
 void place_pellet(){
     board[5][5]='O';
     board[15][15]='O';
     board[4][17]='O';
 }
 
+//This function is evoked at the beginning of the game, and is responsible for randomly placing ghost on the board.
 void place_ghosts(){
     random_device rd;
     mt19937 gen(rd());
@@ -127,6 +134,7 @@ void place_ghosts(){
     }
 }
 
+//This function is evoked when Pacman pick up pellet
 void remove_pellet(int x, int y) {
     update_board(x, y, ' ');
     score += SCORE_PELLET;
@@ -134,11 +142,13 @@ void remove_pellet(int x, int y) {
     pellet_time = chrono::system_clock::now();
 }
 
+//This function is responsible for adding points for Pacman, when he eats ghost.
 void remove_ghost(/*int x, int y*/) {
     //update_board(x, y, ' ');
     score += SCORE_GHOST;
 }
 
+//This function change Pacman position values and evokes update_board() function to redraw board.
 void move_pacman(int dx, int dy) {
     testInt++;
     int new_x = pacman_x + dx;
@@ -177,6 +187,7 @@ void move_pacman(int dx, int dy) {
 
 }
 
+// This function is game_loop for all ghosts on the board. They are moved by this function in random directions
 void move_ghosts() {
     Sleep(5000);
     random_device rd;
@@ -220,6 +231,7 @@ void move_ghosts() {
     }
 }
 
+//This function is game_loop for Pacman. Inside it conditional statements are waiting for pressed arrow key and move Pacman
 void game_loop() {
     while (!game_over && still_points()) {
         auto curr_time = chrono::system_clock::now();
@@ -260,6 +272,7 @@ void board_reloader(){
     }
 }
 
+// Main game function. Iis responsible for setting up board, ghosts, starting and ending threads.
 int main() {
 
     // initialize game board and score
@@ -336,7 +349,8 @@ int main() {
     update_board(pacman_x, pacman_y, 'P');
     print_board();
     semafor.release();
-    // start game loop
+
+    // Starting game - starting threads
     std::thread pacman_thread(game_loop);
 
     std::thread ghost_thread(move_ghosts);

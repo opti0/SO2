@@ -7,10 +7,6 @@
 	Duchy czasem znikają z planszy (widoczne zwłaszcza na "pustej mapie")
 	Po zjedzeniu ducha on sie pojawia w tym samym miejscu w kolejnej iteracji swojego wątku
 
-## - Komentarze w kodzie:
-    Brakuje komentarzy w kodzie (w języku angielskim,
-    łumaczących co z grubsza robi każda funkcja.
-
 ---
 # SO2 - Pacman
 
