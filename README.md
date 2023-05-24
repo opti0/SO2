@@ -7,14 +7,6 @@
 	Duchy czasem znikają z planszy (widoczne zwłaszcza na "pustej mapie")
 	Po zjedzeniu ducha on sie pojawia w tym samym miejscu w kolejnej iteracji swojego wątku
 
-## - Mutexy:
-    W jednym miejscu trzeba jeszcze zmienić "board mutex" na nasz semafor
-
-## - Język kodu:
-    Zmienić nazwy funkcji w pliku "semafor.cpp" na angielski,
-    tak, aby zachować spójność całego projektu
-    i być zgodnym z warunkami z prezentacji.
-
 ## - Komentarze w kodzie:
     Brakuje komentarzy w kodzie (w języku angielskim,
     łumaczących co z grubsza robi każda funkcja.

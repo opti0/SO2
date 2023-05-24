@@ -92,9 +92,7 @@ void print_board() {
 }
 
 void update_board(int x, int y, char c) {
-    board_mutex.lock();
     board[y][x] = c;
-    board_mutex.unlock();
 }
 
 void remove_dot(int x, int y) {
@@ -172,7 +170,7 @@ void move_pacman(int dx, int dy) {
         remove_ghost();
         }
         //print_board();
-        else if (c == 'G' && !pellet) {
+    else if (c == 'G' && !pellet) {
         update_board(pacman_x, pacman_y, 'X');
         game_over = true;
     }
@@ -185,7 +183,7 @@ void move_ghosts() {
     mt19937 gen(rd());
     uniform_int_distribution<int> dis(0, 3);
     while (!game_over) {
-        semafor.pozyskaj();
+        semafor.get();
         for(auto & ghost : ghosts) {
             int dx = 0, dy = 0;
             int r = dis(gen);
@@ -217,7 +215,7 @@ void move_ghosts() {
             }
         }
         print_board();
-        semafor.zwolnij();
+        semafor.release();
         Sleep(500);
     }
 }
@@ -231,7 +229,7 @@ void game_loop() {
             pellet = false;
         //print_board();
         int c = _getch(); // for Windows
-        semafor.pozyskaj();
+        semafor.get();
         if (c == 224) { // arrow key
             c = _getch(); // for Windows
             if (c == 72) { // up
@@ -245,7 +243,7 @@ void game_loop() {
             }
         }
         print_board();
-        semafor.zwolnij();
+        semafor.release();
     }
     if (game_over)
         cout<<"Game over!"<<endl;
@@ -337,7 +335,7 @@ int main() {
     pacman_y = BOARD_HEIGHT / 2;
     update_board(pacman_x, pacman_y, 'P');
     print_board();
-    semafor.zwolnij();
+    semafor.release();
     // start game loop
     std::thread pacman_thread(game_loop);
 

@@ -11,35 +11,35 @@ class Semafor
     private:
         //integer z dostępem atomowym
         //dostęp atomowy = operacje synchronizowane przez system operacyjny
-        atomic<bool> zeton;
+        atomic<bool> token;
 
     public:
         //semafor z zadaną liczbą żetonów
         //jeden żeton = jeden proces z dostępem do sekcji krytycznej
-        Semafor(bool zeton = false) : zeton(zeton) 
+        Semafor(bool token = false) : token(token)
         {}
 
-        //pozyskaj żeton
-        void pozyskaj() {
+        //get żeton
+        void get() {
             //uzyskaj czy mamy teraz żeton
-            bool stary_zeton = zeton.load();
+            bool old_token = token.load();
             //jeśli jest false (brak żetonu)
             //lub nie jesteś w stanie zmienić go na false
             //uwaga: ta funkcja zmieni liczbę żetonów tylko jeśli jest ich wciąż "stare_zetony"
             //czyli inny proces nie pracuje na nich w tej chwili
-            while (stary_zeton == false ||
-                !zeton.compare_exchange_strong(
-                    stary_zeton,
-                    false))
+            while (old_token == false ||
+                   !token.compare_exchange_strong(
+                           old_token,
+                           false))
             {
                 //odświeżamy stan żetonu
-                stary_zeton = zeton.load();
+                old_token = token.load();
             }
         }
 
-        //zwolnij żeton
-        void zwolnij() {
-            zeton.store(true);
+        //release żeton
+        void release() {
+            token.store(true);
         }
 };
 
@@ -65,9 +65,9 @@ void bezpieczny_sumator()
 {
     for (int i = 0; i < n; i++)
     {
-        sem.pozyskaj();
+        sem.get();
         suma++;
-        sem.zwolnij();
+        sem.release();
     }
 }
 
@@ -77,13 +77,13 @@ void producent()
     int i = 100;
     while (i > 0)
     {
-        sem.pozyskaj();
+        sem.get();
         magazyn++;
         i--;
         stringstream s;
         s << "Watek " << this_thread::get_id() << " produkuje (" << magazyn << ")\n";
         cout << s.str();
-        sem.zwolnij();
+        sem.release();
     }
 }
 void konsument()
@@ -91,7 +91,7 @@ void konsument()
     int i = 100;
     while (i > 0)
     {
-        sem.pozyskaj();
+        sem.get();
         if (magazyn == 0)
         {
             stringstream s;
@@ -106,7 +106,7 @@ void konsument()
             s << "Watek " << this_thread::get_id() << " konsumuje (" << magazyn << ")\n";
             cout << s.str();
         }
-        sem.zwolnij();
+        sem.release();
     }
 }
 /*
@@ -147,7 +147,7 @@ int main()
         for (int i = 0; i < k; i++) {
             producenci[i] = thread(producent);
         }
-        sem.zwolnij();
+        sem.release();
         for (int i = 0; i < k; i++) {
             konsumenci[i] = thread(konsument);
         }
