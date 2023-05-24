@@ -1,5 +1,8 @@
 # TODO:
 
+## - Dokumentacja:
+    Opis sekcji krytycznych (czy coś jeszcze nie trzeba dopisać)
+
 ## - Działanie power pelletu
 	Jest dodana podstawowa funkcjonalność. W momencie zjedzienia pelletu pacman i pellet na chwilę znikają. 
       
@@ -62,7 +65,9 @@ Dla każdego z duchów losuje kierunek, w jakim duch się poruszy i jeśli ten k
 Wątek ten również pilnuje pokrycia się pozycji ducha i Pacmana.
 
 ## Sekcje krytyczne:
-(typ, np muteks/semafor)
+Kontrolę nad sekcjami krytycznymi w grze sprawuje się za pomocą autorskiego semafora. Gdy jakaś z funkcji wchodzi do sekcji krytycznej, pobiera jeden jedyny dostępny żeton, więc do czasu, gdy się tam znajduje, żadna inna funkcja nie może wejść do sekcji krytycznej.
+
+W sytuacji, gdy funkcja chce wejść do sekcji krytycznej, a żeton nie jest dostępny, zostaje wstrzymana i oczekuje w kolejce na zwolnienie żetonu i swoją kolej na jego pobranie.
 
 
 
