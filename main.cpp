@@ -136,7 +136,7 @@ void place_ghosts(){
 
 //This function is evoked when Pacman pick up pellet
 void remove_pellet(int x, int y) {
-    update_board(x, y, ' ');
+    update_board(x, y, 'P');
     score += SCORE_PELLET;
     pellet = true;
     pellet_time = chrono::system_clock::now();

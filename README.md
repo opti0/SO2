@@ -2,9 +2,6 @@
 
 ## - Dokumentacja:
     Opis sekcji krytycznych (czy coś jeszcze nie trzeba dopisać)
-
-## - Działanie power pelletu
-	Jest dodana podstawowa funkcjonalność. W momencie zjedzienia pelletu pacman i pellet na chwilę znikają. 
       
 ## - Duchy:
 	Duchy czasem znikają z planszy (widoczne zwłaszcza na "pustej mapie")
