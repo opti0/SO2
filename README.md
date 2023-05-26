@@ -1,13 +1,3 @@
-# TODO:
-
-## - Dokumentacja:
-    Opis sekcji krytycznych (czy coś jeszcze nie trzeba dopisać)
-      
-## - Duchy:
-	Duchy czasem znikają z planszy (widoczne zwłaszcza na "pustej mapie")
-	Po zjedzeniu ducha on sie pojawia w tym samym miejscu w kolejnej iteracji swojego wątku
-
----
 # SO2 - Pacman
 
 ### Spis treści
